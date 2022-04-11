@@ -39,8 +39,6 @@ public class PostagemController {
 	public ResponseEntity<List<Postagem>> getAll(){
 		
 		return ResponseEntity.ok(postagemRepository.findAll());
-		
-		// SELECT FROM * tb_postagens;
 	}
 	
 	@GetMapping("/{id}")
@@ -49,9 +47,6 @@ public class PostagemController {
 		return postagemRepository.findById(id)
 				.map(resposta -> ResponseEntity.ok(resposta))
 				.orElse(ResponseEntity.notFound().build());
-		
-		// SELECT FROM * tb_postagens WHERE id = x;
-	
 	}
 	
 	@GetMapping("/titulo/{titulo}")
@@ -97,5 +92,4 @@ public class PostagemController {
 		postagemRepository.deleteById(id);
 	
 	}	
-		//postagemRepository.deleteById(id);
 }

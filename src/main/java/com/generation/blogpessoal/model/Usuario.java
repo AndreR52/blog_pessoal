@@ -1,6 +1,5 @@
 package com.generation.blogpessoal.model;
 
-
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,47 +11,48 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Entity
-@Table(name = "tb_usuario")
+@Table(name = "tb_usuarios")
 public class Usuario {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotBlank(message = "O atributo nome é obrigatório!")
-	@Size(min = 3, max = 100, message = "O atributo nome deve possuir no mínimo 3 e no máximo 100 caracteres.")
+
+	@NotNull(message = "O atributo Nome é Obrigatório!")
 	private String nome;
-	
-	@NotBlank(message = "O atributo usuario é obrigatório!")
-	@Email(message = "O atributo usuário precisa ser um email válido")
+
+	@Schema(example = "email@email.com.br")
+	@NotNull(message = "O atributo Usuário é Obrigatório!")
+	@Email(message = "O atributo Usuário deve ser um email válido!")
 	private String usuario;
-	
-	@NotBlank(message = "O atributo senha é obrigatório!")
-	@Size(min = 8, message = "O atributo senha deve possuir no mínimo 8 caracteres.")
+
+	@NotBlank(message = "O atributo Senha é Obrigatório!")
+	@Size(min = 8, message = "A Senha deve ter no mínimo 8 caracteres")
 	private String senha;
-	
+
 	private String foto;
-	
+
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
-	private List<Postagem> postagem;	
-		
-	public Usuario(Long id,	String nome, String usuario, String senha, String foto) {
+	private List<Postagem> postagem;
+	
+	public Usuario(Long id, String nome, String usuario, String senha, String foto) {
 		this.id = id;
 		this.nome = nome;
 		this.usuario = usuario;
 		this.senha = senha;
 		this.foto = foto;
 	}
-	
-	public Usuario() {}
+
+	public Usuario() {	}
 
 	public Long getId() {
 		return id;
@@ -94,5 +94,12 @@ public class Usuario {
 		this.foto = foto;
 	}
 
+	public List<Postagem> getPostagem() {
+		return postagem;
+	}
+
+	public void setPostagem(List<Postagem> postagem) {
+		this.postagem = postagem;
+	}
 
 }
